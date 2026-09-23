@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eldorado Boosting Assistant - Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #0f0f23;
+      color: #eee;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: #1a1a2e;
+      padding: 20px 0;
+      border-right: 1px solid #333;
+    }
+    .sidebar-header {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+    }
+    .sidebar-header h1 {
+      font-size: 16px;
+      color: #4CAF50;
+    }
+    .nav-section {
+      margin-bottom: 20px;
+    }
+    .nav-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #666;
+      padding: 0 20px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .nav-item:hover {
+      background: #16213e;
+      color: #fff;
+    }
+    .nav-item.active {
+      background: #16213e;
+      color: #4CAF50;
+      border-left: 3px solid #4CAF50;
+    }
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    .page-header {
+      margin-bottom: 24px;
+    }
+    .page-header h2 {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      color: #888;
+      font-size: 14px;
+    }
+    .card {
+      background: #1a1a2e;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #333;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      background: #16213e;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+    .toggle-row:last-child {
+      border-bottom: none;
+    }
+    .toggle-label {
+      font-size: 14px;
+      color: #ddd;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #4CAF50;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #45a049;
+    }
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-enabled { background: #2e7d32; color: white; }
+    .status-disabled { background: #c62828; color: white; }
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h1>🎮 Eldorado Assistant</h1>
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">General</div>
+        <div class="nav-item active" data-page="general">General</div>
+        <div class="nav-item" data-page="regions">Regions</div>
+        <div class="nav-item" data-page="filters">Filters</div>
+        <div class="nav-item" data-page="muted">Muted Users</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Services</div>
+        <div class="nav-item" data-page="rankboost">Rank Boosting</div>
+        <div class="nav-item" data-page="placements">Placements</div>
+        <div class="nav-item" data-page="netwins">Net Wins</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Messaging</div>
+        <div class="nav-item" data-page="autochat">Auto-Chat</div>
+        <div class="nav-item" data-page="followup">Follow-up</div>
+        <div class="nav-item" data-page="discord">Discord</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Monitoring</div>
+        <div class="nav-item" data-page="orders">Orders</div>
+        <div class="nav-item" data-page="console">Console</div>
+        <div class="nav-item" data-page="activity">Activity Log</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">System</div>
+        <div class="nav-item" data-page="extension">Extension</div>
+        <div class="nav-item" data-page="backend">Backend</div>
+        <div class="nav-item" data-page="settings">Settings</div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- General Page -->
+      <div id="general" class="page active">
+        <div class="page-header">
+          <h2>General Settings</h2>
+          <p>Configure bot behavior and automation mode</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">Bot Configuration</div>
+          
+          <div class="toggle-row">
+            <span class="toggle-label">Bot Enabled</span>
+            <select id="botEnabled" class="form-control" style="width: auto;">
+              <option value="true">ON</option>
+              <option value="false">OFF</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 16px;">
+            <label class="form-label">Automation Mode</label>
+            <select id="automationMode" class="form-control">
+              <option value="NOTIFICATION_ONLY">NOTIFICATION_ONLY (Active)</option>
+              <option value="AUTO_OFFER">AUTO_OFFER (Coming Soon)</option>
+              <option value="FULL_AUTOMATION">FULL_AUTOMATION (Coming Soon)</option>
+            </select>
+          </div>
+
+          <button id="saveGeneral" class="btn btn-primary" style="margin-top: 16px;">Save Settings</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">System Status</div>
+          
+          <div class="toggle-row">
+            <span class="toggle-label">Extension Status</span>
+            <span id="extStatus" class="status-badge status-enabled">Connected</span>
+          </div>
+          
+          <div class="toggle-row">
+            <span class="toggle-label">Backend Status</span>
+            <span id="backendStatusBadge" class="status-badge status-disabled">Offline</span>
+          </div>
+          
+          <div class="toggle-row">
+            <span class="toggle-label">Last Heartbeat</span>
+            <span id="lastHeartbeat" style="color: #888; font-size: 13px;">Never</span>
+          </div>
+          
+          <div class="toggle-row">
+            <span class="toggle-label">Version</span>
+            <span style="color: #888; font-size: 13px;">0.1.0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Page -->
+      <div id="orders" class="page">
+        <div class="page-header">
+          <h2>Detected Orders</h2>
+          <p>View all detected League of Legends boosting requests</p>
+        </div>
+        
+        <div class="card">
+          <div id="ordersList">
+            <div class="empty-state">
+              <div class="empty-state-icon">📋</div>
+              <p>No orders detected yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Console Page -->
+      <div id="console" class="page">
+        <div class="page-header">
+          <h2>Live Console</h2>
+          <p>Real-time processing events and logs</p>
+        </div>
+        
+        <div class="card">
+          <div id="consoleOutput" style="background: #0f0f23; padding: 16px; border-radius: 6px; font-family: monospace; font-size: 12px; max-height: 400px; overflow-y: auto;">
+            <div style="color: #666;">Waiting for events...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder pages -->
+      <div id="regions" class="page">
+        <div class="page-header">
+          <h2>Regions</h2>
+          <p>Configure active regions for order detection</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Region configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="filters" class="page">
+        <div class="page-header">
+          <h2>Filters</h2>
+          <p>Configure order filtering rules</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Filter configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="muted" class="page">
+        <div class="page-header">
+          <h2>Muted Users</h2>
+          <p>Manage muted buyers</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Muted users management coming soon...</p>
+        </div>
+      </div>
+
+      <div id="rankboost" class="page">
+        <div class="page-header">
+          <h2>Rank Boosting</h2>
+          <p>Configure rank boost pricing and settings</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Rank boost configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="placements" class="page">
+        <div class="page-header">
+          <h2>Placements</h2>
+          <p>Configure placement games pricing</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Placements configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="netwins" class="page">
+        <div class="page-header">
+          <h2>Net Wins</h2>
+          <p>Configure net wins pricing</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Net wins configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="autochat" class="page">
+        <div class="page-header">
+          <h2>Auto-Chat</h2>
+          <p>Configure automated messaging</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Auto-chat configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="followup" class="page">
+        <div class="page-header">
+          <h2>Follow-up</h2>
+          <p>Configure follow-up message settings</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Follow-up configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="discord" class="page">
+        <div class="page-header">
+          <h2>Discord Notifications</h2>
+          <p>Configure Discord webhook notifications</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Discord configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="activity" class="page">
+        <div class="page-header">
+          <h2>Activity Log</h2>
+          <p>View historical activity</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Activity log coming soon...</p>
+        </div>
+      </div>
+
+      <div id="extension" class="page">
+        <div class="page-header">
+          <h2>Extension Status</h2>
+          <p>View extension connection details</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Extension status coming soon...</p>
+        </div>
+      </div>
+
+      <div id="backend" class="page">
+        <div class="page-header">
+          <h2>Backend Connection</h2>
+          <p>Configure backend server settings</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Backend configuration coming soon...</p>
+        </div>
+      </div>
+
+      <div id="settings" class="page">
+        <div class="page-header">
+          <h2>Settings</h2>
+          <p>Additional system settings</p>
+        </div>
+        <div class="card">
+          <p style="color: #888;">Additional settings coming soon...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../options/index.js"></script>
+</body>
+</html>

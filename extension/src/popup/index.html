@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eldorado Boosting Assistant - Popup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      padding: 16px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #333;
+    }
+    .header h1 {
+      font-size: 16px;
+      color: #4CAF50;
+    }
+    .status-card {
+      background: #16213e;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .status-item:last-child {
+      margin-bottom: 0;
+    }
+    .status-label {
+      color: #aaa;
+    }
+    .status-value {
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .status-enabled { background: #2e7d32; color: white; }
+    .status-disabled { background: #c62828; color: white; }
+    .status-connected { background: #1976d2; color: white; }
+    .status-disconnected { background: #c62828; color: white; }
+    .status-online { background: #388e3c; color: white; }
+    .status-offline { background: #c62828; color: white; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-item {
+      background: #16213e;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: #888;
+      margin-top: 2px;
+    }
+    .last-event {
+      background: #16213e;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .last-event-title {
+      color: #888;
+      margin-bottom: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .last-event-content {
+      color: #ddd;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #4CAF50;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #45a049;
+    }
+    .btn-secondary {
+      background: #1976d2;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #1565c0;
+    }
+    .btn-danger {
+      background: #c62828;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #b71c1c;
+    }
+    .mode-badge {
+      background: #ff9800;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎮 Eldorado Assistant</h1>
+  </div>
+
+  <div class="status-card">
+    <div class="status-item">
+      <span class="status-label">Bot Status</span>
+      <span id="botStatus" class="status-value status-disabled">DISABLED</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">Eldorado</span>
+      <span id="eldoradoStatus" class="status-value status-disconnected">DISCONNECTED</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">Backend</span>
+      <span id="backendStatus" class="status-value status-offline">OFFLINE</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">Mode</span>
+      <span id="automationMode" class="mode-badge">NOTIFICATION_ONLY</span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div id="statDetected" class="stat-value">0</div>
+      <div class="stat-label">Detected</div>
+    </div>
+    <div class="stat-item">
+      <div id="statAccepted" class="stat-value">0</div>
+      <div class="stat-label">Accepted</div>
+    </div>
+    <div class="stat-item">
+      <div id="statSkipped" class="stat-value">0</div>
+      <div class="stat-label">Skipped</div>
+    </div>
+    <div class="stat-item">
+      <div id="statGone" class="stat-value">0</div>
+      <div class="stat-label">Gone</div>
+    </div>
+    <div class="stat-item">
+      <div id="statFailed" class="stat-value">0</div>
+      <div class="stat-label">Failed</div>
+    </div>
+    <div class="stat-item">
+      <div id="statMessages" class="stat-value">0</div>
+      <div class="stat-label">Messages</div>
+    </div>
+  </div>
+
+  <div class="last-event">
+    <div class="last-event-title">Last Detected Order</div>
+    <div id="lastOrder" class="last-event-content">No orders detected yet</div>
+  </div>
+
+  <div class="last-event">
+    <div class="last-event-title">Last Event</div>
+    <div id="lastEvent" class="last-event-content">No events yet</div>
+  </div>
+
+  <div class="buttons">
+    <button id="toggleBot" class="btn-primary">Enable Bot</button>
+    <button id="openDashboard" class="btn-secondary">Open Dashboard</button>
+    <button id="openOrders" class="btn-secondary">View Orders</button>
+    <button id="openConsole" class="btn-secondary">View Console</button>
+  </div>
+
+  <script src="../popup/index.js"></script>
+</body>
+</html>
