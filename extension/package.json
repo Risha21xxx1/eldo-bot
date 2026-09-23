@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsc && npm run copy-assets",
-    "copy-assets": "cp src/popup/index.html dist/popup/index.html && cp src/options/index.html dist/options/index.html && mkdir -p dist/icons && node scripts/create-icons.js",
+    "copy-assets": "cp src/popup/index.html dist/popup/index.html && cp src/options/index.html dist/options/index.html && cp manifest.json dist/manifest.json && mkdir -p dist/icons && node scripts/create-icons.js",
     "watch": "tsc --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/**/*.ts"
