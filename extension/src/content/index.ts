@@ -4,7 +4,7 @@
  * Scans the page for order information and sends it to the background worker.
  */
 
-import { EldoradoOrder, ContentScriptMessage } from '@shared/types';
+import { EldoradoOrder, ContentScriptMessage } from '../shared/types';
 import { ELDORADO_SELECTORS } from './selectors';
 
 // Track scanned orders to avoid duplicates

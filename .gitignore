@@ -1,1 +1,26 @@
-Nothing needs to be added to the .gitignore file based on the provided changes, as only Python source files were modified without any build artifacts, dependencies, or temporary files being introduced.
+```
+# Build artifacts
+extension/dist/
+
+# TypeScript compilation
+*.tsbuildinfo
+*.d.ts
+*.d.ts.map
+
+# Dependencies
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+```
