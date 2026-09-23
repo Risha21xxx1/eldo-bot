@@ -13,18 +13,18 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": ".",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "@shared/*": ["../shared/types/*"],
-      "@messaging/*": ["src/messaging/*"],
-      "@parsers/*": ["src/parsers/*"],
-      "@selectors/*": ["src/selectors/*"]
+      "@shared/*": ["shared/*"],
+      "@messaging/*": ["messaging/*"],
+      "@parsers/*": ["parsers/*"],
+      "@selectors/*": ["selectors/*"]
     },
     "typeRoots": ["./node_modules/@types"]
   },
   "include": [
-    "src/**/*",
-    "../shared/types/**/*"
+    "src/**/*"
   ],
   "exclude": ["node_modules", "dist"]
 }

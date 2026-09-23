@@ -1,26 +1,43 @@
 ```
-# Build artifacts
-extension/dist/
-
-# TypeScript compilation
-*.tsbuildinfo
-*.d.ts
-*.d.ts.map
-
+# Compiled and build artifacts
+*.map
+*.pyc
+*.class
+*.o
+*.exe
+*.dll
+*.so
+*.a
+*.obj
+*.out
 # Dependencies
 node_modules/
-
-# IDE files
-.vscode/
-.idea/
+venv/
+.venv/
+__pycache__/
+dist/
+build/
+target/
+.mypy_cache/
+.pytest_cache/
+.gradle/
+# Logs and temp files
+*.log
+*.tmp
 *.swp
 *.swo
-
-# Logs
-*.log
-
 # Environment
 .env
 .env.local
 *.env.*
+# Editors
+.vscode/
+.idea/
+# System files
+.DS_Store
+Thumbs.db
+# Coverage
+coverage/
+htmlcov/
+.coverage
 ```

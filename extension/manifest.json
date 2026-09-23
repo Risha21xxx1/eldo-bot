@@ -16,18 +16,18 @@
     "http://127.0.0.1:8000/*"
   ],
   "background": {
-    "service_worker": "extension/src/background/index.js",
+    "service_worker": "background/index.js",
     "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["https://*.eldorado.gg/*"],
-      "js": ["extension/src/content/index.js"],
+      "js": ["content/index.js"],
       "run_at": "document_idle"
     }
   ],
   "action": {
-    "default_popup": "extension/src/popup/index.html",
+    "default_popup": "popup/index.html",
     "default_title": "Eldorado Boosting Assistant",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -36,11 +36,11 @@
     }
   },
   "options_ui": {
-    "page": "extension/src/options/index.html",
+    "page": "options/index.html",
     "open_in_tab": true
   },
   "side_panel": {
-    "default_path": "extension/src/options/index.html"
+    "default_path": "options/index.html"
   },
   "icons": {
     "16": "icons/icon16.png",
@@ -49,7 +49,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["extension/src/*"],
+      "resources": ["*"],
       "matches": ["https://*.eldorado.gg/*"]
     }
   ]
