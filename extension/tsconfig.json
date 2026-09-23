@@ -13,7 +13,6 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@shared/*": ["../shared/types/*"],
@@ -21,8 +20,11 @@
       "@parsers/*": ["src/parsers/*"],
       "@selectors/*": ["src/selectors/*"]
     },
-    "typeRoots": ["./node_modules/@types", "../shared/types"]
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src/**/*", "../shared/types/**/*"],
+  "include": [
+    "src/**/*",
+    "../shared/types/**/*"
+  ],
   "exclude": ["node_modules", "dist"]
 }

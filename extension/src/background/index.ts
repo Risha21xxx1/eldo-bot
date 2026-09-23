@@ -11,7 +11,7 @@ import {
   HealthCheckResponse,
   ApiResponse,
   EldoradoOrder,
-} from '@shared/types';
+} from '../shared/types';
 
 // Configuration
 let backendUrl = 'http://localhost:8000';
@@ -65,7 +65,7 @@ async function handleMessage(
       return await syncOrders(message.payload as EldoradoOrder[]);
     
     case 'SETTINGS_UPDATE':
-      return await updateSettings(message.payload as Partial<typeof settings>);
+      return await updateSettings(message.payload as Record<string, unknown>);
     
     default:
       return { success: false, error: 'Unknown message type' };
