@@ -5,7 +5,7 @@
  */
 
 import { EldoradoOrder, ContentScriptMessage } from '../shared/types';
-import { ELDORADO_SELECTORS } from './selectors';
+import { ELDORADO_SELECTORS } from '../selectors';
 
 // Track scanned orders to avoid duplicates
 const scannedOrderIds = new Set<string>();
